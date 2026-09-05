@@ -12,7 +12,7 @@ export default function Countries({ countriesPromise }: CountriesProps) {
 
   return (
     <div>
-      <h2>Countries Name & Details: </h2>
+      <h2>Country Name Details: </h2>
       <div className="countries">
         {countries.map((country) => (
           <Country key={country.cca3} country={country} />
