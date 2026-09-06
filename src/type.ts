@@ -10,4 +10,10 @@ export interface CountryType {
     };
   };
   cca3: string;
+  capital: {
+    capital: [""];
+  };
+  population: {
+    population: number;
+  };
 }
