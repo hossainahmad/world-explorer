@@ -9,3 +9,7 @@
 .country img {
   width: 300px;
 }
+
+.country-visited {
+  background-color: lightblue;
+}
