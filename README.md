@@ -158,11 +158,11 @@ Through World Explorer, I am practicing:
 - TypeScript with React
 - Props
 - State management
-- `useState`
+- useState
 - `useEffect`
 - API requests
-- `fetch()`
-- `async/await`
+- fetch()
+- async/await
 - Promises
 - Loading states
 - Error handling
@@ -243,9 +243,3 @@ Assistant Programmer & Aspiring Web Developer
 ## ⭐ Support
 
 If you find this project useful or interesting, consider giving it a ⭐ on GitHub.
-
----
-
-## 📄 License
-
-This project is open source and available under the MIT License.
