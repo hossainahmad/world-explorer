@@ -21,14 +21,6 @@ World Explorer allows users to browse country information, search for countries,
 
 ---
 
-## 🖥️ Preview
-
-> 🚧 Project currently under development.
-
-A live demo and screenshots will be added once the project reaches its first stable version.
-
----
-
 ## 🛠️ Technologies
 
 | Technology | Purpose |
@@ -127,9 +119,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-The application will be available at the local development URL provided by Vite.
-
 ---
 
 ## 📦 Build for Production
@@ -234,7 +223,7 @@ The project focuses on writing clean, reusable, maintainable code while followin
 
 **Hossain Ahmad**
 
-Assistant Programmer & Aspiring Web Developer
+ Aspiring Web Developer
 
 - GitHub: [@hossainahmad](https://github.com/hossainahmad)
 
