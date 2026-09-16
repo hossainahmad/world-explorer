@@ -135,7 +135,6 @@ To preview the production build locally:
 npm run preview
 ```
 
----
 
 ## 🧠 What I Learned From This Project
 
@@ -226,9 +225,3 @@ The project focuses on writing clean, reusable, maintainable code while followin
  Aspiring Web Developer
 
 - GitHub: [@hossainahmad](https://github.com/hossainahmad)
-
----
-
-## ⭐ Support
-
-If you find this project useful or interesting, consider giving it a ⭐ on GitHub.
