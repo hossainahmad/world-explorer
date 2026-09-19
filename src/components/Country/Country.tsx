@@ -22,7 +22,7 @@ export default function Country({ country }: CountryProps) {
       <img src={country.flags.flags.png} alt={country.flags.flags.alt} />
       <p>Capital:{country.capital.capital}</p>
       <p>Population: {country.population.population} </p>
-      <button onClick={handleVisited}>
+      <button onClick={handleVisited} className="btn btn-active btn-secondary">
         {Visited ? "Visited" : "Mark as Visited"}
       </button>
     </div>
