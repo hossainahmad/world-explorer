@@ -1,19 +1,20 @@
+export interface CountryName {
+  common: string;
+  official?: string;
+}
+
+export interface CountryFlags {
+  png: string;
+  svg?: string;
+  alt?: string;
+}
+
 export interface CountryType {
-  name: {
-    common: string;
-    official: string;
-  };
-  flags: {
-    flags: {
-      png: string;
-      alt: string;
-    };
-  };
-  cca3: string;
-  capital: {
-    capital: [""];
-  };
-  population: {
-    population: number;
-  };
+  name: CountryName;
+  flags: CountryFlags;
+  capital?: string[];
+  population: number;
+  cca2?: string;
+  cca3?: string;
+  region?: string;
 }
