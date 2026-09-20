@@ -9,10 +9,10 @@ World Explorer allows users to browse country information, search for countries,
 ## ✨ Features
 
 - 🌎 Browse countries from around the world
-- 🔍 Search countries by name
+- 🔍 Search countries by name or capital
 - 🏳️ Display country flags
 - 👥 View population information
-- 📍 View capital and region
+- 📍 View capital
 - 📱 Responsive design
 - ⚡ Fast development with Vite
 - 🔄 Fetch real-time data from a REST API
