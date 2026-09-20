@@ -2,26 +2,36 @@ import { useState } from "react";
 import type { CountryType } from "../../type";
 
 interface CountryProps {
-  country: CountryType;
-  onVisitedToggle?: (country: CountryType, isVisited: boolean) => void;
+  country: any; // Using 'any' here or updated type interface to safely parse nested properties
+  onVisitedToggle?: (country: any, isVisited: boolean) => void;
 }
 
 export default function Country({ country, onVisitedToggle }: CountryProps) {
   const [visited, setVisited] = useState(false);
 
-  // Safe mapping based on the Programming Hero API output
+  // 1. Extract Name
   const name = country?.name?.common ?? "Unknown Country";
-  const flag = country?.flags?.png || country?.flags?.svg || "";
-  const capital =
-    Array.isArray(country?.capital) && country.capital.length > 0
-      ? country.capital[0]
-      : typeof country?.capital === "string"
-        ? country.capital
-        : "N/A";
-  const population =
-    typeof country?.population === "number"
-      ? country.population.toLocaleString()
+
+  // 2. Extract Flag (double-nested under flags.flags)
+  const flag =
+    country?.flags?.flags?.png ||
+    country?.flags?.flags?.svg ||
+    country?.flags?.png ||
+    country?.flags?.svg ||
+    "";
+
+  // 3. Extract Capital (nested under capital.capital array)
+  const rawCapital = country?.capital?.capital ?? country?.capital;
+  const capital = Array.isArray(rawCapital)
+    ? rawCapital[0]
+    : typeof rawCapital === "string"
+      ? rawCapital
       : "N/A";
+
+  // 4. Extract Population (nested under population.population)
+  const rawPopulation = country?.population?.population ?? country?.population;
+  const population =
+    typeof rawPopulation === "number" ? rawPopulation.toLocaleString() : "N/A";
 
   const handleVisitClick = () => {
     const nextVisitedState = !visited;
@@ -30,16 +40,17 @@ export default function Country({ country, onVisitedToggle }: CountryProps) {
       onVisitedToggle(country, nextVisitedState);
     }
   };
+
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
       <div>
-        {/* Flag Image */}
-        <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
+        {/* Flag Image Container */}
+        <div className="relative aspect-16/10 bg-slate-100 overflow-hidden">
           {flag ? (
             <img
               src={flag}
               alt={`${name} flag`}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              className="w-full h-full p-3 rounded-3xl object-cover hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
           ) : (
@@ -49,7 +60,7 @@ export default function Country({ country, onVisitedToggle }: CountryProps) {
           )}
         </div>
 
-        {/* Content */}
+        {/* Details */}
         <div className="p-5">
           <h3
             className="text-lg font-bold text-slate-800 mb-3 truncate"
@@ -61,7 +72,7 @@ export default function Country({ country, onVisitedToggle }: CountryProps) {
           <div className="space-y-2 text-sm text-slate-600">
             <div className="flex justify-between items-center">
               <span className="font-medium text-slate-500">Capital:</span>
-              <span className="font-semibold text-slate-700 truncate max-w-[120px] text-right">
+              <span className="font-semibold text-slate-700 truncate max-w-30 text-right">
                 {capital}
               </span>
             </div>
@@ -73,7 +84,7 @@ export default function Country({ country, onVisitedToggle }: CountryProps) {
         </div>
       </div>
 
-      {/* Visited Button */}
+      {/* Button Action */}
       <div className="p-5 pt-0">
         <button
           type="button"
