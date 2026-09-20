@@ -21,14 +21,6 @@ World Explorer allows users to browse country information, search for countries,
 
 ---
 
-## 🖥️ Preview
-
-> 🚧 Project currently under development.
-
-A live demo and screenshots will be added once the project reaches its first stable version.
-
----
-
 ## 🛠️ Technologies
 
 | Technology | Purpose |
@@ -127,9 +119,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-The application will be available at the local development URL provided by Vite.
-
 ---
 
 ## 📦 Build for Production
@@ -146,7 +135,6 @@ To preview the production build locally:
 npm run preview
 ```
 
----
 
 ## 🧠 What I Learned From This Project
 
@@ -158,11 +146,11 @@ Through World Explorer, I am practicing:
 - TypeScript with React
 - Props
 - State management
-- `useState`
+- useState
 - `useEffect`
 - API requests
-- `fetch()`
-- `async/await`
+- fetch()
+- async/await
 - Promises
 - Loading states
 - Error handling
@@ -234,18 +222,6 @@ The project focuses on writing clean, reusable, maintainable code while followin
 
 **Hossain Ahmad**
 
-Assistant Programmer & Aspiring Web Developer
+ Aspiring Web Developer
 
 - GitHub: [@hossainahmad](https://github.com/hossainahmad)
-
----
-
-## ⭐ Support
-
-If you find this project useful or interesting, consider giving it a ⭐ on GitHub.
-
----
-
-## 📄 License
-
-This project is open source and available under the MIT License.

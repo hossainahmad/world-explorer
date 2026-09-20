@@ -30,7 +30,6 @@ export default function Country({ country, onVisitedToggle }: CountryProps) {
       onVisitedToggle(country, nextVisitedState);
     }
   };
-
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between">
       <div>
