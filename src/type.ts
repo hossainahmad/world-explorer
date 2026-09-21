@@ -1,22 +1,36 @@
 export interface CountryType {
-  name: {
-    common: string;
+  name?: {
+    common?: string;
     official?: string;
   };
-  capital?: {
-    capital: string[];
-  };
-  population?: {
-    population: number;
-  };
+  capital?:
+    | {
+        capital?: string[];
+      }
+    | string[]
+    | string;
+  population?:
+    | {
+        population?: number;
+      }
+    | number;
   flags?: {
-    flags: {
-      png: string;
-      svg: string;
+    flags?: {
+      png?: string;
+      svg?: string;
       alt?: string;
     };
+    png?: string;
+    svg?: string;
   };
-  cca3?: {
-    cca3: string;
-  };
+  region?:
+    | {
+        region?: string;
+      }
+    | string;
+  cca3?:
+    | {
+        cca3?: string;
+      }
+    | string;
 }
