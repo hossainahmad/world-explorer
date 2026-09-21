@@ -1,7 +1,9 @@
+// src/components/Countries/Countries.tsx
 import { use, useState } from "react";
 import type { CountryType } from "../../type";
 import Country from "../Country/Country";
 import WorldMap from "../WorldMap/WorldMap";
+import CountryModal from "../CountryModal/CountryModal";
 
 interface CountriesProps {
   countriesPromise: Promise<CountryType[]>;
@@ -9,7 +11,6 @@ interface CountriesProps {
 
 const REGIONS = ["All", "Africa", "Americas", "Asia", "Europe", "Oceania"];
 
-// Fuzzy name normalization to fix map-to-country API naming mismatches
 const normalizeName = (name: string) => {
   return name
     .toLowerCase()
@@ -19,21 +20,15 @@ const normalizeName = (name: string) => {
 };
 
 export default function Countries({ countriesPromise }: CountriesProps) {
-  const countries = use(countriesPromise);
-  const [visitedList, setVisitedList] = useState<string[]>([]);
+  const rawCountries = use(countriesPromise);
+
+  // Guard clause to ensure countries is always an array
+  const countries = Array.isArray(rawCountries) ? rawCountries : [];
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("All");
+  const [activeCountry, setActiveCountry] = useState<CountryType | null>(null);
 
-  const handleVisitedToggle = (country: CountryType, isVisited: boolean) => {
-    const name = country?.name?.common;
-    if (!name) return;
-
-    setVisitedList((prev) =>
-      isVisited ? [...prev, name] : prev.filter((c) => c !== name),
-    );
-  };
-
-  // Safe search and region filtering logic
   const filteredCountries = countries.filter((country: any) => {
     const apiName = country?.name?.common || "";
 
@@ -50,7 +45,6 @@ export default function Countries({ countriesPromise }: CountriesProps) {
     const normalizedQuery = normalizeName(query);
     const normalizedApiName = normalizeName(apiName);
 
-    // Check direct search match or normalized fuzzy match for map clicks
     const matchesSearch =
       query === "" ||
       apiName.toLowerCase().includes(query) ||
@@ -67,47 +61,39 @@ export default function Countries({ countriesPromise }: CountriesProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Top Header */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             World Explorer
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Explore countries, flags, and keep track of places you have visited.
+            Explore countries, flags, capitals, currencies, and interactive
+            maps.
           </p>
         </div>
 
-        {/* Search Bar & Counter */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <div className="relative flex-1 sm:w-64">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search country or capital..."
-              className="w-full pl-9 pr-8 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
-            />
-            <span className="absolute left-3 top-2.5 text-xs text-slate-400">
-              🔍
-            </span>
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-slate-400 hover:text-slate-600"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-
-          <div className="inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 shadow-sm shrink-0">
-            Visited:{" "}
-            <span className="ml-2 px-2.5 py-0.5 bg-indigo-600 text-white rounded-md text-xs font-bold">
-              {visitedList.length}
-            </span>
-          </div>
+        {/* Search Bar */}
+        <div className="relative sm:w-72">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search country or capital..."
+            className="w-full pl-9 pr-8 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+          />
+          <span className="absolute left-3 top-2.5 text-xs text-slate-400">
+            🔍
+          </span>
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-slate-400 hover:text-slate-600"
+            >
+              ✕
+            </button>
+          )}
         </div>
       </div>
 
@@ -128,11 +114,8 @@ export default function Countries({ countriesPromise }: CountriesProps) {
         ))}
       </div>
 
-      {/* Interactive Bright World Map */}
-      <WorldMap
-        visitedCountries={visitedList}
-        onCountryClick={(countryName) => setSearchQuery(countryName)}
-      />
+      {/* World Map */}
+      <WorldMap onCountryClick={(countryName) => setSearchQuery(countryName)} />
 
       {/* Country Cards Grid */}
       {filteredCountries.length > 0 ? (
@@ -147,7 +130,7 @@ export default function Countries({ countriesPromise }: CountriesProps) {
               <Country
                 key={uniqueKey}
                 country={country}
-                onVisitedToggle={handleVisitedToggle}
+                onSelectCountry={setActiveCountry}
               />
             );
           })}
@@ -158,6 +141,7 @@ export default function Countries({ countriesPromise }: CountriesProps) {
             No countries found matching your filters.
           </p>
           <button
+            type="button"
             onClick={() => {
               setSearchQuery("");
               setSelectedRegion("All");
@@ -168,6 +152,14 @@ export default function Countries({ countriesPromise }: CountriesProps) {
           </button>
         </div>
       )}
+
+      {/* Detailed View Modal */}
+      <CountryModal
+        country={activeCountry}
+        allCountries={countries} // <-- Pass the full list for neighbor lookup
+        onClose={() => setActiveCountry(null)}
+        onSelectCountry={setActiveCountry} // <-- Allow modal to switch countries
+      />
     </div>
   );
 }

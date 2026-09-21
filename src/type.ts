@@ -28,9 +28,15 @@ export interface CountryType {
         region?: string;
       }
     | string;
+  cca2?:
+    | {
+        cca2?: string;
+      }
+    | string;
   cca3?:
     | {
         cca3?: string;
       }
     | string;
+  borders?: string[] | { borders?: string[] };
 }

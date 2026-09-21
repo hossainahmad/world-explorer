@@ -7,12 +7,18 @@ const fetchCountries = async (): Promise<CountryType[]> => {
   try {
     const res = await fetch("https://openapi.programming-hero.com/api/all");
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
     const data = await res.json();
-    return data.countries || data;
+
+    // Extract array if data is wrapped in an object property
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.countries)) return data.countries;
+    if (Array.isArray(data?.data)) return data.data;
+
+    return [];
   } catch (err) {
-    console.error("Primary API failed, attempting fallback...", err);
-    const fallbackRes = await fetch("https://restcountries.com/v3.1/all");
-    return await fallbackRes.json();
+    console.error("Failed to fetch countries:", err);
+    return []; // Return an empty array on error so .filter() never crashes
   }
 };
 

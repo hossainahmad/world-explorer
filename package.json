@@ -15,7 +15,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-simple-maps": "^5.0.5",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "world-countries": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
