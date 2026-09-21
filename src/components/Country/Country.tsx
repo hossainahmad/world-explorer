@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { CountryType } from "../../type";
 
 interface CountryProps {
   country: any; // Using 'any' here or updated type interface to safely parse nested properties
