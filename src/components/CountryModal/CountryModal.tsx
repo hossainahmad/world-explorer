@@ -1,6 +1,6 @@
 // src/components/CountryModal/CountryModal.tsx
 import { useEffect, useRef, useState } from "react";
-import countriesData from "world-countries"; // <-- New reliable library
+import countriesData from "world-countries";
 import type { CountryType } from "../../type";
 import LocalClock from "../LocalClock/LocalClock";
 import WeatherWidget from "../WeatherWidget/WeatherWidget";
