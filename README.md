@@ -5,7 +5,7 @@ Explore the world, one country at a time.
 
 World Explorer is a web application built with React and TypeScript that helps users explore country information through data retrieved from a public REST API. The project focuses on API integration, reusable UI components, and presenting information in a clear, user-friendly interface.
 
-🔗 **Live Demo:** Add your deployed URL here  
+🔗 **Live Demo:** https://world-explorer-neon.vercel.app/
 📂 **Repository:** https://github.com/hossainahmad/world-explorer
 
 ---
